@@ -1,7 +1,7 @@
 const express=require("express");
-const Router=express.Router();
+const CourseRouter=express.Router();
 
-Router.post("/purchase",function(req,res)
+CourseRouter.post("/purchase",function(req,res)
 {
   res.json(
     {
@@ -9,7 +9,7 @@ Router.post("/purchase",function(req,res)
    })
 })
 
-Router.get("/preview",function(req,res)
+CourseRouter.get("/preview",function(req,res)
 {
   res.json(
     {

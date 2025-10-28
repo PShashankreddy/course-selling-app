@@ -6,8 +6,7 @@ const mongoose=require("mongoose");
 const app=express();
 app.use(express.json());
 
-app.use("/user",);
-app.use("/course",);
-createUserRoutes(app);
-createCourseRoutes(app);
+app.use("/api/v1/user",UserRouter);
+app.use("/api/v1/course",CourseRouter);
+
 app.listen(3000);

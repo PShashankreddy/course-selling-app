@@ -1,6 +1,5 @@
 const express=require("express")
-const Router=express.Router();
-const UserRouter=Router();
+const UserRouter=express.Router();
 
 
 UserRouter.post("/signup",function(req,res)
