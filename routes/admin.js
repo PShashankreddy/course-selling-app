@@ -4,18 +4,17 @@ const {adminModel}=require("../db");
 const {courseModel}=require("../db");
 const adminMiddleware=require("../middleware/admin");
 const jwt=require("jsonwebtoken");
-const JWT_ADMIN_PASSWORD=require("../config");
+const {JWT_ADMIN_PASSWORD}=require("../config");
 AdminRouter.post("/signup",async function(req,res)
 {
   const {email,password,firstName,lastName}=req.body; //add zod validation later on
   try{
-  await adminModel.create(
-    {
-      email:email,
-      password:password,
-      firstname:firstName,
-      lastName:lastName
-    }) 
+  await adminModel.create({
+  email: email,
+  password: password,
+  firstName: firstName,
+  lastName: lastName
+}); 
   }catch(err)
   {
     return res.status(500).json(
@@ -109,7 +108,7 @@ AdminRouter.put("/course",async function(req,res)
    })
 })
 
-AdminRouter.get("/course/bulk",async function(req,res)
+AdminRouter.get("/course/bulk",adminMiddleware,async function(req,res)
 {
   const adminId=req.userId;
   const courses=await courseModel.find(
