@@ -1,26 +1,17 @@
-const jwt=require("jsonwebtoken");
-const JWT_ADMIN_PASSWORD=require("../config");
+// middleware/admin.js
+const jwt = require("jsonwebtoken");
+const JWT_ADMIN_PASSWORD = require("../config");
 
-function adminMiddleware(req,res,next)
-{
-  const token=req.headers.token;
-  const decoded=jwt.verify(token,JWT_ADMIN_PASSWORD);
+function adminMiddleware(req, res, next) {
+  const token = req.headers.token;
+  const decoded = jwt.verify(token, JWT_ADMIN_PASSWORD);
 
-  if(decoded)
-  {
-    req.userId=decoded.id;
+  if (decoded) {
+    req.userId = decoded.id;
     next();
+  } else {
+    res.status(401).json({ message: "unauthorized" });
   }
-  else{
-    res.status(401).json(
-      {
-        message:"unauthorized"
-      }
-    )
-  }
-
 }
 
-module.exports={
-  adminMiddleware
-}
+module.exports = adminMiddleware; 

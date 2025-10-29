@@ -1,6 +1,7 @@
 const {Router}=require("express");
 const AdminRouter=Router();
 const {adminModel}=require("../db");
+const {courseModel}=require("../db");
 const adminMiddleware=require("../middleware/admin");
 const jwt=require("jsonwebtoken");
 const JWT_ADMIN_PASSWORD=require("../config");
@@ -85,19 +86,41 @@ AdminRouter.post("/course",adminMiddleware,async function(req,res)
    })
 })
 
-AdminRouter.put("/course",function(req,res)
+AdminRouter.put("/course",async function(req,res)
 {
+  const adminId=req.userId;
+  const {courseId,title,description,price,imageUrl}=req.body;
+  await courseModel.updateOne(
+    {
+      _id:courseId,
+      creatorId:adminId
+    },
+    {
+      title,
+      description,
+      price,
+      imageUrl
+    }
+  )
+
   res.json(
     {
-    message:"course endpoint"
+    message:"course updated endpoint"
    })
 })
 
-AdminRouter.get("/course/bulk",function(req,res)
+AdminRouter.get("/course/bulk",async function(req,res)
 {
+  const adminId=req.userId;
+  const courses=await courseModel.find(
+    {
+      creatorId:adminId
+    }
+  );
   res.json(
     {
-    message:"course endpoint"
+    message:"course endpoint",
+    courses:courses
    })
 })
 
