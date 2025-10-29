@@ -1,7 +1,7 @@
 const jwt=require("jsonwebtoken");
-const JWT_USER_PASSWORD=require("../config");
+const {JWT_USER_PASSWORD}=require("../config");
 
-function userMiddleware(re,res,next)
+function userMiddleware(req,res,next)
 {
   const token=req.headers.token;
   const decoded=jwt.verify(token,JWT_USER_PASSWORD);
