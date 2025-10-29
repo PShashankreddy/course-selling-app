@@ -37,6 +37,8 @@ const purchaseSchema=new Schema(
   courseId:ObjectId
 })
 
+
+
 const userModel=mongoose.model("user",userSchema);
 const adminModel=mongoose.model("admin",adminSchema);
 const courseModel=mongoose.model("course",courseSchema);

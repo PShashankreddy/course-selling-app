@@ -2,6 +2,7 @@ const express=require("express")
 const UserRouter=express.Router();
 const jwt=require("jsonwebtoken");
 const JWT_USER_PASSWORD=require("../config");
+const {userMiddleware}=require("../middleware/user");
 const {userModel}=require("../db");
 
 
@@ -67,11 +68,17 @@ UserRouter.post("/signin",async function(req,res)
 })
 
 
-UserRouter.get("/purchases",function(req,res)
+UserRouter.get("/purchases",userMiddleware,async function(req,res)
 {
+  const userId=req.userId;
+  const purchases=await purchaseModel.find(
+    {
+      userId:userId
+    }
+  )
   res.json(
     {
-    message:"purchases endpoint"
+      purchases:purchases
    })
 })
 
