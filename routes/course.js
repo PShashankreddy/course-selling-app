@@ -1,7 +1,8 @@
 const express=require("express");
 const CourseRouter=express.Router();
+const {courseModel}=require("../db");
 
-CourseRouter.post("/purchase",function(req,res)
+CourseRouter.post("/purchase",async function(req,res)
 {
   res.json(
     {
